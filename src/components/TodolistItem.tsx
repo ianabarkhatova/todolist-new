@@ -10,8 +10,10 @@ export const TodolistItem = (props: Props) => {
     changeFilter(filter)
   }
   const addTaskHandler = () => {
-    addTask(taskTitle)
-    setTaskTitle("")
+    if (taskTitle.trim()) {
+      addTask(taskTitle.trim())
+      setTaskTitle("")
+    }
   }
   const addTaskOnKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -31,7 +33,8 @@ export const TodolistItem = (props: Props) => {
     return (
       <>
         <li key={task.id}>
-          <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler} /> <span>{task.title}</span>
+          <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler} />
+          <span>{task.title}</span>
           <Button title={"x"} onClick={deleteTaskHandler} />
         </li>
       </>
