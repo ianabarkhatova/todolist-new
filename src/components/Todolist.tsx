@@ -2,23 +2,46 @@ import { FilterValueType, Task } from "../App.tsx";
 import { Button } from "./Button.tsx";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 
-export const TodolistItem = (props: Props) => {
-  const { title, tasks, deleteTask, changeFilter, addTask, changeTaskStatus } =
-    props;
+export const Todolist = (props: Props) => {
+  const {
+    title,
+    tasks,
+    deleteTask,
+    changeFilter,
+    addTask,
+    changeTaskStatus,
+    todolistId,
+    filter,
+  } = props;
   const [taskTitle, setTaskTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState("All");
+
+  const filterTasks = () => {
+    switch (filter) {
+      case "Active": {
+        return tasks.filter((task) => !task.isDone);
+      }
+      case "Completed": {
+        return tasks.filter((task) => task.isDone);
+      }
+      default:
+        return tasks;
+    }
+  };
+
+  let filteredTasks = filterTasks();
 
   const changeFilterHandler = (filter: FilterValueType) => {
-    changeFilter(filter);
-    setFilter(filter);
+    changeFilter(todolistId, filter);
   };
+
   const addTaskHandler = () => {
     if (taskTitle.trim()) {
       addTask(taskTitle.trim());
       setTaskTitle("");
     } else setError("Title is required");
   };
+
   const addTaskOnKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       addTaskHandler();
@@ -32,7 +55,7 @@ export const TodolistItem = (props: Props) => {
     changeTaskStatus(taskId, newIsDone);
   };
 
-  const mappedTasks = tasks.map((task) => {
+  const mappedTasks = filteredTasks.map((task) => {
     const deleteTaskHandler = () => deleteTask(task.id);
 
     return (
@@ -90,9 +113,11 @@ export const TodolistItem = (props: Props) => {
 
 type Props = {
   title: string;
+  todolistId: string;
+  filter: FilterValueType;
   tasks: Task[];
   deleteTask: (taskId: string) => void;
-  changeFilter: (filter: FilterValueType) => void;
+  changeFilter: (todolistId: string, filter: FilterValueType) => void;
   addTask: (newTitle: string) => void;
   changeTaskStatus: (taskId: string, isDone: boolean) => void;
 };
