@@ -12,6 +12,7 @@ export const Todolist = (props: Props) => {
     changeTaskStatus,
     todolistId,
     filter,
+    removeTodolist,
   } = props;
   const [taskTitle, setTaskTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +38,7 @@ export const Todolist = (props: Props) => {
 
   const addTaskHandler = () => {
     if (taskTitle.trim()) {
-      addTask(taskTitle.trim());
+      addTask(todolistId, taskTitle.trim());
       setTaskTitle("");
     } else setError("Title is required");
   };
@@ -52,11 +53,15 @@ export const Todolist = (props: Props) => {
     setTaskTitle(e.currentTarget.value);
   };
   const changeTaskStatusHandler = (taskId: string, newIsDone: boolean) => {
-    changeTaskStatus(taskId, newIsDone);
+    changeTaskStatus(todolistId, taskId, newIsDone);
+  };
+
+  const removeTodoListHandler = () => {
+    removeTodolist(todolistId);
   };
 
   const mappedTasks = filteredTasks.map((task) => {
-    const deleteTaskHandler = () => deleteTask(task.id);
+    const deleteTaskHandler = () => deleteTask(todolistId, task.id);
 
     return (
       <>
@@ -77,7 +82,15 @@ export const Todolist = (props: Props) => {
 
   return (
     <div>
-      <h3>{title}</h3>
+      <div className={"container"}>
+        <h3>{title}</h3>
+        <Button
+          title={"x"}
+          onClick={() => {
+            removeTodoListHandler();
+          }}
+        />
+      </div>
       <div>
         <input
           value={taskTitle}
@@ -116,8 +129,13 @@ type Props = {
   todolistId: string;
   filter: FilterValueType;
   tasks: Task[];
-  deleteTask: (taskId: string) => void;
+  deleteTask: (todolistId: string, taskId: string) => void;
   changeFilter: (todolistId: string, filter: FilterValueType) => void;
-  addTask: (newTitle: string) => void;
-  changeTaskStatus: (taskId: string, isDone: boolean) => void;
+  addTask: (todolistId: string, newTitle: string) => void;
+  changeTaskStatus: (
+    todolistId: string,
+    taskId: string,
+    isDone: boolean,
+  ) => void;
+  removeTodolist: (todolistId: string) => void;
 };
