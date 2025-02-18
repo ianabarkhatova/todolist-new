@@ -2,6 +2,7 @@ import "./App.css";
 import { Todolist } from "./components/Todolist.tsx";
 import { useState } from "react";
 import { v1 } from "uuid";
+import { AddItemForm } from "./components/AddItemForm.tsx";
 
 export const App = () => {
   const todolistId1 = v1();
@@ -70,8 +71,20 @@ export const App = () => {
     setTasks({ ...tasks });
   };
 
+  const addTodolist = (title: string) => {
+    const id = v1();
+    const newTodolist: Todolist = {
+      id,
+      title: title,
+      filter: "All",
+    };
+    setTodolists((prevState) => [...prevState, newTodolist]);
+    setTasks((prevState) => ({ ...prevState, [id]: [] }));
+  };
+
   return (
     <div className="app">
+      <AddItemForm addItem={addTodolist} />
       {todolists.map((todolist) => {
         return (
           <>

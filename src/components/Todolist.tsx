@@ -1,6 +1,6 @@
 import { FilterValueType, Task } from "../App.tsx";
 import { Button } from "./Button.tsx";
-import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { AddItemForm } from "./AddItemForm.tsx";
 
 export const Todolist = (props: Props) => {
   const {
@@ -14,8 +14,6 @@ export const Todolist = (props: Props) => {
     filter,
     removeTodolist,
   } = props;
-  const [taskTitle, setTaskTitle] = useState("");
-  const [error, setError] = useState<string | null>(null);
 
   const filterTasks = () => {
     switch (filter) {
@@ -36,22 +34,6 @@ export const Todolist = (props: Props) => {
     changeFilter(todolistId, filter);
   };
 
-  const addTaskHandler = () => {
-    if (taskTitle.trim()) {
-      addTask(todolistId, taskTitle.trim());
-      setTaskTitle("");
-    } else setError("Title is required");
-  };
-
-  const addTaskOnKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      addTaskHandler();
-    }
-  };
-  const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setError(null);
-    setTaskTitle(e.currentTarget.value);
-  };
   const changeTaskStatusHandler = (taskId: string, newIsDone: boolean) => {
     changeTaskStatus(todolistId, taskId, newIsDone);
   };
@@ -60,7 +42,11 @@ export const Todolist = (props: Props) => {
     removeTodolist(todolistId);
   };
 
-  const mappedTasks = filteredTasks.map((task) => {
+  const addTaskHandler = (title: string) => {
+    addTask(todolistId, title);
+  };
+
+  const mappedTasks = filteredTasks?.map((task) => {
     const deleteTaskHandler = () => deleteTask(todolistId, task.id);
 
     return (
@@ -91,16 +77,7 @@ export const Todolist = (props: Props) => {
           }}
         />
       </div>
-      <div>
-        <input
-          value={taskTitle}
-          onChange={changeTaskTitleHandler}
-          onKeyDown={addTaskOnKeyDownHandler}
-          className={error ? "error" : ""}
-        />
-        <Button title={"+"} onClick={addTaskHandler} />
-        {error && <div className={"error-message"}>{error}</div>}
-      </div>
+      <AddItemForm addItem={addTaskHandler} />
       {tasks.length === 0 ? <p>No tasks</p> : <ul>{mappedTasks}</ul>}
 
       <div>
