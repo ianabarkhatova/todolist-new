@@ -1,6 +1,7 @@
 import { FilterValueType, Task } from "../App.tsx";
 import { Button } from "./Button.tsx";
 import { AddItemForm } from "./AddItemForm.tsx";
+import { EditableSpan } from "./EditableSpan.tsx";
 
 export const Todolist = (props: Props) => {
   const {
@@ -13,6 +14,8 @@ export const Todolist = (props: Props) => {
     todolistId,
     filter,
     removeTodolist,
+    updateTaskTitle,
+    updateTodolistTitle,
   } = props;
 
   const filterTasks = () => {
@@ -34,16 +37,24 @@ export const Todolist = (props: Props) => {
     changeFilter(todolistId, filter);
   };
 
-  const changeTaskStatusHandler = (taskId: string, newIsDone: boolean) => {
-    changeTaskStatus(todolistId, taskId, newIsDone);
-  };
-
   const removeTodoListHandler = () => {
     removeTodolist(todolistId);
   };
 
+  const updateTodolistTitleHandler = (newTitle: string) => {
+    updateTodolistTitle(todolistId, newTitle);
+  };
+
   const addTaskHandler = (title: string) => {
     addTask(todolistId, title);
+  };
+
+  const updateTaskTitleHandler = (updatedTitle: string, taskId: string) => {
+    updateTaskTitle(todolistId, taskId, updatedTitle);
+  };
+
+  const changeTaskStatusHandler = (taskId: string, newIsDone: boolean) => {
+    changeTaskStatus(todolistId, taskId, newIsDone);
   };
 
   const mappedTasks = filteredTasks?.map((task) => {
@@ -59,7 +70,12 @@ export const Todolist = (props: Props) => {
               changeTaskStatusHandler(task.id, e.currentTarget.checked)
             }
           />
-          <span>{task.title}</span>
+          <EditableSpan
+            oldTitle={task.title}
+            onClick={(updatedTitle) =>
+              updateTaskTitleHandler(updatedTitle, task.id)
+            }
+          />
           <Button title={"x"} onClick={deleteTaskHandler} />
         </li>
       </>
@@ -69,7 +85,13 @@ export const Todolist = (props: Props) => {
   return (
     <div>
       <div className={"container"}>
-        <h3>{title}</h3>
+        <h3>
+          <EditableSpan
+            oldTitle={title}
+            onClick={(newTitle) => updateTodolistTitleHandler(newTitle)}
+          />
+        </h3>
+
         <Button
           title={"x"}
           onClick={() => {
@@ -115,4 +137,10 @@ type Props = {
     isDone: boolean,
   ) => void;
   removeTodolist: (todolistId: string) => void;
+  updateTaskTitle: (
+    todolistId: string,
+    taskId: string,
+    updatedTitle: string,
+  ) => void;
+  updateTodolistTitle: (todolistId: string, newTitle: string) => void;
 };

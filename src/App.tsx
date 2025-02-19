@@ -82,6 +82,29 @@ export const App = () => {
     setTasks((prevState) => ({ ...prevState, [id]: [] }));
   };
 
+  const updateTaskTitle = (
+    todolistId: string,
+    taskId: string,
+    updatedTitle: string,
+  ) => {
+    setTasks((prevState) => ({
+      ...prevState,
+      [todolistId]: prevState[todolistId].map((task) =>
+        task.id === taskId ? { ...task, title: updatedTitle } : task,
+      ),
+    }));
+  };
+
+  const updateTodolistTitle = (todolistId: string, newTitle: string) => {
+    setTodolists((prevState) =>
+      prevState.map((todolist) =>
+        todolist.id === todolistId
+          ? { ...todolist, title: newTitle }
+          : todolist,
+      ),
+    );
+  };
+
   return (
     <div className="app">
       <AddItemForm addItem={addTodolist} />
@@ -99,6 +122,8 @@ export const App = () => {
               addTask={addTask}
               changeTaskStatus={changeTaskStatus}
               removeTodolist={removeTodolist}
+              updateTaskTitle={updateTaskTitle}
+              updateTodolistTitle={updateTodolistTitle}
             />
           </>
         );
