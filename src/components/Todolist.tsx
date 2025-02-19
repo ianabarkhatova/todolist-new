@@ -49,6 +49,8 @@ export const Todolist = (props: Props) => {
     addTask(todolistId, title);
   };
 
+  const deleteTaskHandler = (taskId: string) => deleteTask(todolistId, taskId);
+
   const updateTaskTitleHandler = (updatedTitle: string, taskId: string) => {
     updateTaskTitle(todolistId, taskId, updatedTitle);
   };
@@ -58,8 +60,6 @@ export const Todolist = (props: Props) => {
   };
 
   const mappedTasks = filteredTasks?.map((task) => {
-    const deleteTaskHandler = () => deleteTask(todolistId, task.id);
-
     return (
       <>
         <li key={task.id} className={task.isDone ? "is-done" : ""}>
@@ -76,7 +76,7 @@ export const Todolist = (props: Props) => {
               updateTaskTitleHandler(updatedTitle, task.id)
             }
           />
-          <Button title={"x"} onClick={deleteTaskHandler} />
+          <Button title={"x"} onClick={() => deleteTaskHandler(task.id)} />
         </li>
       </>
     );
