@@ -61,24 +61,22 @@ export const Todolist = (props: Props) => {
 
   const mappedTasks = filteredTasks?.map((task) => {
     return (
-      <>
-        <li key={task.id} className={task.isDone ? "is-done" : ""}>
-          <input
-            type="checkbox"
-            checked={task.isDone}
-            onChange={(e) =>
-              changeTaskStatusHandler(task.id, e.currentTarget.checked)
-            }
-          />
-          <EditableSpan
-            oldTitle={task.title}
-            onClick={(updatedTitle) =>
-              updateTaskTitleHandler(updatedTitle, task.id)
-            }
-          />
-          <Button title={"x"} onClick={() => deleteTaskHandler(task.id)} />
-        </li>
-      </>
+      <li key={task.id} className={task.isDone ? "is-done" : ""}>
+        <input
+          type="checkbox"
+          checked={task.isDone}
+          onChange={(e) =>
+            changeTaskStatusHandler(task.id, e.currentTarget.checked)
+          }
+        />
+        <EditableSpan
+          oldTitle={task.title}
+          onClick={(updatedTitle) =>
+            updateTaskTitleHandler(updatedTitle, task.id)
+          }
+        />
+        <Button title={"x"} onClick={() => deleteTaskHandler(task.id)} />
+      </li>
     );
   });
 

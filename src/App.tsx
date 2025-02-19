@@ -110,22 +110,20 @@ export const App = () => {
       <AddItemForm addItem={addTodolist} />
       {todolists.map((todolist) => {
         return (
-          <>
-            <Todolist
-              key={todolist.id}
-              todolistId={todolist.id}
-              filter={todolist.filter}
-              title={todolist.title}
-              tasks={tasks[todolist.id]}
-              deleteTask={deleteTask}
-              changeFilter={changeFilter}
-              addTask={addTask}
-              changeTaskStatus={changeTaskStatus}
-              removeTodolist={removeTodolist}
-              updateTaskTitle={updateTaskTitle}
-              updateTodolistTitle={updateTodolistTitle}
-            />
-          </>
+          <Todolist
+            key={todolist.id}
+            todolistId={todolist.id}
+            filter={todolist.filter}
+            title={todolist.title}
+            tasks={tasks[todolist.id]}
+            deleteTask={deleteTask}
+            changeFilter={changeFilter}
+            addTask={addTask}
+            changeTaskStatus={changeTaskStatus}
+            removeTodolist={removeTodolist}
+            updateTaskTitle={updateTaskTitle}
+            updateTodolistTitle={updateTodolistTitle}
+          />
         );
       })}
     </div>
