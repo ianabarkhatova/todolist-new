@@ -9,6 +9,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
 import { filterButtonsContainerSx, getListItemSx } from "../Todolist.styles.ts";
+import { Grid2 } from "@mui/material";
 
 export const Todolist = (props: Props) => {
   const {
@@ -112,26 +113,28 @@ export const Todolist = (props: Props) => {
           </IconButton>
         </h3>
       </div>
-      <AddItemForm addItem={addTaskHandler} />
+      <Grid2 container sx={{ mb: "30px" }}>
+        <AddItemForm addItem={addTaskHandler} />
+      </Grid2>
       {tasks.length === 0 ? <p>No tasks</p> : <List>{mappedTasks}</List>}
 
       <Box sx={filterButtonsContainerSx}>
         <Button
-          variant={filter === "All" ? "contained" : "outlined"}
+          variant={filter === "All" ? "contained" : "text"}
           color="success"
           onClick={() => changeFilterHandler("All")}
         >
           All
         </Button>
         <Button
-          variant={filter === "Active" ? "contained" : "outlined"}
+          variant={filter === "Active" ? "contained" : "text"}
           color="primary"
           onClick={() => changeFilterHandler("Active")}
         >
           Active
         </Button>
         <Button
-          variant={filter === "Completed" ? "contained" : "outlined"}
+          variant={filter === "Completed" ? "contained" : "text"}
           color="secondary"
           onClick={() => changeFilterHandler("Completed")}
         >

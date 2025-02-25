@@ -1,6 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { addButtonSx } from "../Button.styles.ts";
+import Box from "@mui/material/Box";
 
 type Props = {
   addItem: (title: string) => void;
@@ -29,7 +31,7 @@ export const AddItemForm = ({ addItem }: Props) => {
   };
 
   return (
-    <div>
+    <Box sx={{ display: "flex", alignItems: "center" }}>
       <TextField
         error={!!error}
         id="outlined-basic"
@@ -41,10 +43,9 @@ export const AddItemForm = ({ addItem }: Props) => {
         size="small"
       />
 
-      {/*//todo: customize button styles*/}
-      <Button variant="contained" size="small" onClick={addItemHandler}>
+      <Button sx={addButtonSx} variant="contained" onClick={addItemHandler}>
         +
       </Button>
-    </div>
+    </Box>
   );
 };
