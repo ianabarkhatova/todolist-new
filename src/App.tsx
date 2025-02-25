@@ -121,16 +121,16 @@ export const App = () => {
     palette: {
       mode: themeMode === "light" ? "light" : "dark",
       primary: {
-        // light: "#757ce8",
-        main: "#7d89df",
-        // dark: "#002884",
-        // contrastText: "#fff",
+        light: "#DAD2FF",
+        main: "#B2A5FF",
+        dark: "#493D9E",
+        contrastText: "#FFFFFF",
       },
       secondary: {
-        light: "#ff7961",
-        main: "#f44336",
-        dark: "#ba000d",
-        contrastText: "#000",
+        light: "#B3D8A8",
+        main: "#A3D1C6",
+        dark: "#3D8D7A",
+        contrastText: "#FFFFFF",
       },
     },
   });

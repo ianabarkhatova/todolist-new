@@ -23,9 +23,11 @@ export const ButtonAppBar = ({ changeModeHandler }: Props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          ></Typography>
           <NavButton>Login</NavButton>
           <NavButton>Logout</NavButton>
           <NavButton>FAQ</NavButton>

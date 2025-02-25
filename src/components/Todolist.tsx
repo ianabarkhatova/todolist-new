@@ -9,7 +9,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Box from "@mui/material/Box";
 import { filterButtonsContainerSx, getListItemSx } from "../Todolist.styles.ts";
-import { Grid2 } from "@mui/material";
+import { Grid2, useTheme } from "@mui/material";
 
 export const Todolist = (props: Props) => {
   const {
@@ -67,6 +67,8 @@ export const Todolist = (props: Props) => {
     changeTaskStatus(todolistId, taskId, newIsDone);
   };
 
+  const theme = useTheme();
+
   const mappedTasks = filteredTasks?.map((task) => {
     return (
       <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
@@ -121,14 +123,17 @@ export const Todolist = (props: Props) => {
       <Box sx={filterButtonsContainerSx}>
         <Button
           variant={filter === "All" ? "contained" : "text"}
-          color="success"
+          color="primary"
           onClick={() => changeFilterHandler("All")}
         >
           All
         </Button>
         <Button
           variant={filter === "Active" ? "contained" : "text"}
-          color="primary"
+          sx={{
+            backgroundColor:
+              filter === "Active" ? theme.palette.primary.dark : "transparent",
+          }}
           onClick={() => changeFilterHandler("Active")}
         >
           Active
