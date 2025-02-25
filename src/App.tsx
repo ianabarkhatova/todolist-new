@@ -148,9 +148,8 @@ export const App = () => {
           <Grid container sx={{ mt: 5 }}>
             {todolists.map((todolist) => {
               return (
-                <Paper elevation={3} sx={{ p: 5, m: 2 }}>
+                <Paper key={todolist.id} elevation={3} sx={{ p: 5, m: 2 }}>
                   <Todolist
-                    key={todolist.id}
                     todolistId={todolist.id}
                     filter={todolist.filter}
                     title={todolist.title}
