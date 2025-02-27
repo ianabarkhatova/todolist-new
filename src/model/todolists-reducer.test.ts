@@ -1,25 +1,60 @@
 import { v1 } from "uuid";
-import { expect, test } from "vitest";
+import { beforeEach, expect, test } from "vitest";
 import type { Todolist } from "../App";
-import { todolistsReducer } from "./todolists.reducer.ts";
+import {
+  addTodolistAC,
+  changeTodolistFilterAC,
+  changeTodolistTitleAC,
+  removeTodolistAC,
+  todolistsReducer,
+} from "./todolists-reducer.ts";
 
-test("correct todolist should be deleted", () => {
-  const todolistId1 = v1();
-  const todolistId2 = v1();
+let todolistId1: string;
+let todolistId2: string;
+let startState: Todolist[] = [];
 
-  const startState: Todolist[] = [
+beforeEach(() => {
+  todolistId1 = v1();
+  todolistId2 = v1();
+
+  startState = [
     { id: todolistId1, title: "What to learn", filter: "All" },
     { id: todolistId2, title: "What to buy", filter: "All" },
   ];
+});
 
-  const action = {
-    type: "REMOVE-TODOLIST",
-    payload: {
-      id: todolistId1,
-    },
-  } as const;
-
-  const endState = todolistsReducer(startState, action);
+test("correct todolist should be deleted", () => {
+  const endState = todolistsReducer(startState, removeTodolistAC(todolistId1));
   expect(endState.length).toBe(1);
   expect(endState[0].id).toBe(todolistId2);
+});
+
+test("correct todolist should be created", () => {
+  const title = "New todolist";
+  const endState = todolistsReducer(startState, addTodolistAC(title));
+
+  expect(endState.length).toBe(3);
+  expect(endState[2].title).toBe(title);
+});
+
+test("correct todolist should change its title", () => {
+  const title = "New title";
+  const endState = todolistsReducer(
+    startState,
+    changeTodolistTitleAC({ id: todolistId2, title }),
+  );
+
+  expect(endState[0].title).toBe("What to learn");
+  expect(endState[1].title).toBe(title);
+});
+
+test("correct todolist should change its filter", () => {
+  const filter = "Completed";
+  const endState = todolistsReducer(
+    startState,
+    changeTodolistFilterAC({ id: todolistId2, filter }),
+  );
+
+  expect(endState[0].filter).toBe("All");
+  expect(endState[1].filter).toBe(filter);
 });

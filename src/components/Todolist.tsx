@@ -16,7 +16,7 @@ export const Todolist = (props: Props) => {
     title,
     tasks,
     deleteTask,
-    changeFilter,
+    changeTodolistFilter,
     addTask,
     changeTaskStatus,
     todolistId,
@@ -42,7 +42,7 @@ export const Todolist = (props: Props) => {
   let filteredTasks = filterTasks();
 
   const changeFilterHandler = (filter: FilterValueType) => {
-    changeFilter(todolistId, filter);
+    changeTodolistFilter(todolistId, filter);
   };
 
   const removeTodoListHandler = () => {
@@ -156,7 +156,7 @@ type Props = {
   filter: FilterValueType;
   tasks: Task[];
   deleteTask: (todolistId: string, taskId: string) => void;
-  changeFilter: (todolistId: string, filter: FilterValueType) => void;
+  changeTodolistFilter: (todolistId: string, filter: FilterValueType) => void;
   addTask: (todolistId: string, newTitle: string) => void;
   changeTaskStatus: (
     todolistId: string,
