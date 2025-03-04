@@ -1,4 +1,4 @@
-import { FilterValueType, Task } from "../App.tsx";
+import { FilterValueType, Task } from "../app/App.tsx";
 import { AddItemForm } from "./AddItemForm.tsx";
 import { EditableSpan } from "./EditableSpan.tsx";
 import IconButton from "@mui/material/IconButton";

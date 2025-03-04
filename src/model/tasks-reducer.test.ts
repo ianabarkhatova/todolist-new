@@ -1,5 +1,5 @@
 import { beforeEach, expect, test } from "vitest";
-import { TasksState } from "../App.tsx";
+import { TasksState } from "../app/App.tsx";
 import { addTodolistAC, removeTodolistAC } from "./todolists-reducer.ts";
 import {
   addTaskAC,
@@ -40,7 +40,10 @@ test("empty array should be created for new todolist", () => {
 });
 
 test("property with todolistId should be deleted", () => {
-  const endState = tasksReducer(startState, removeTodolistAC("todolistId2"));
+  const endState = tasksReducer(
+    startState,
+    removeTodolistAC({ id: "todolistId2" }),
+  );
 
   const keys = Object.keys(endState);
 
